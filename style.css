@@ -1,0 +1,219 @@
+body {
+    background-color: #E5EFFF;
+    /* padding: 0 2.5rem; */
+    color: #666;
+    display: grid;
+    gap: 0px;
+    margin: 0;
+}
+
+/* 日付、ゴミ */
+.header-area {
+    display: flex;
+    /* padding: 0 1.2rem; */
+    justify-content: space-between;
+    align-items: center;
+    /* font-size: 200px; */
+    font-size: 6vw;
+
+}
+
+
+/* 日付表示エリア */
+.date-area {
+    /* width: auto; */
+    /* position: relative; */
+    /* display: grid; */
+    /* justify-content: center; */
+    /*font-size: 120px;*/
+    font-weight: 800;
+    /* line-height: 1; */
+    /* margin-left: 0px; */
+    color: darkred;
+    padding: 0px;
+    /* max-width: 100%;
+    height: auto; */
+    
+}
+#realDay {
+        margin: 0px;
+}
+
+#dust {
+    font-weight: bold;
+}
+
+/* 時刻表示エリア */
+.time-area {
+    width: auto;
+    height: 30vh;
+    position: relative;
+    display: grid;
+    justify-content: center;
+    font-weight: 800;
+    line-height: 0.7;
+    /* margin-top: 0.5rem; */
+    color: darkgreen;
+    /* font-size: 500px; */
+    font-size: 20vw;
+    /* border: solid 1px #666; */
+    padding: -10rem 0rem;
+    p {
+        margin: 0px;
+    }
+}
+
+/* 天気予報表示エリア */
+.forecasts-area {
+    display: flex;
+    padding: 0 1.2rem;
+}
+
+/* カード要素 .card1～3 */
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid gray;
+    background-color: white;
+    padding: 0.5rem 1.5rem 1rem;
+    /* box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.2); */
+    /* font-size: 100px; */
+    font-size: 3vw;
+    margin: 0px;
+    line-height: 1.2;
+    flex: 1;
+    min-width: 0;
+
+    img {
+
+        width: 320px;
+        height: 240px;
+        /* width: 160px;
+        height: 120px; */
+
+    }
+
+    > span {
+        height: calc(1em * 1.2);
+    }
+}
+
+.city-temp {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#max__1, #max__2 {
+    color: red;
+}
+
+#city-name-1, #city-name-2 {
+    /* font-size: 80px; */
+    font-size: 3vw;
+    font-weight: bold;
+}
+.card-train {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid gray; */
+    /* background-color: white; */
+    padding: 0.5rem 1.5rem 1rem;
+    /* box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.2); */
+    font-size: 80px;
+    margin: 0px;
+    line-height: 1.2;
+    /* width: 800px; */
+    flex: 2;
+    min-width: 0;
+
+
+}
+/* #train-info-updatetime{
+    font-size: 30px;
+} */
+.scrolling-text {
+    display: flex;
+    overflow: hidden;
+    /* width: 1800px; */
+    font-size: 80px;
+    padding: 0 1.2rem;
+}
+.train-info {
+    overflow: hidden;
+    /* width: 1400px; */
+    flex: 1;
+    min-width: 0;
+}
+@keyframes SlideSample {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+#train-info-status {
+    padding-left: 0%;
+    box-sizing: border-box;
+    white-space: nowrap;
+
+    animation-name: SlideSample;
+    animation-duration: 0s;
+    animation-timing-function: linear;
+    
+    display: inline-block;
+}
+#train-info {
+    margin: 0;
+    padding-left: 0%;
+    box-sizing: border-box;
+    white-space: nowrap;
+
+    animation-name: SlideSample;
+    animation-duration: 0s;
+    animation-timing-function: linear;
+    
+    display: inline-block;
+}
+.scrollEnable {
+    /* animation-duration: 20s;
+    animation-name: SlideSample; */
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+}
+
+.train-status{
+    font-size: 80px;
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.scrolling-text_train-info-status {
+    display: flex;
+    overflow: hidden;
+    width: 900px;
+    font-size: 80px;
+}
+.train-info-status {
+    overflow: hidden;
+    /* width: 1400px; */
+}
+#train-info-range {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 900px;
+}
+
+#credit {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px;
+    text-align: right;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>時計</title>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	
+	<section class="header-area">
+		<div class="date-area">
+			<p id="realDay"></p>
+		</div>
+	
+		<div id="dust">
+			ゴミの日
+		</div>
+	</section>
+
+	<div class="time-area">
+		<p id="realTime"></p>
+	</div>
+	<section class="forecasts-area">
+		<div class="card">
+			<div class="city-temp">
+				<span id="city-name-1">city1</span>
+				<span id="max__1">--℃</span>
+			</div>
+			<img alt="天気予報画像1" class="forecast__image__1">
+			<span id="chanceOfRain__1">-- / -- / -- / --%</span>
+		</div>
+		<div class="card">
+			<div class="city-temp">
+				<span id="city-name-2">city2</span>
+				<span id="max__2">--℃</span>
+			</div>
+			<img alt="天気予報画像2" class="forecast__image__2">
+			<span id="chanceOfRain__2">-- / -- / -- / --%</span>
+		</div>
+		<div class="card-train">
+			<div id="trainName">trainName</div>
+			
+			<div id="train-info-range"></div>
+			
+			<div class="scrolling-text_train-info-status">
+				<div class = "train-status">状態</div><!--ステータスを表示するところ-->
+				<div class ="train-info-status">
+					<!-- <span id="train-info-status"></span> -->
+					<div id="train-info-status">原因</div><!--ステータスを表示するところ-->
+				</div>
+			</div>
+
+			<!-- <span id="train-info-updatetime">更新時刻</span> -->
+			<span id="train-info-updatetime">更新時刻</span>
+		</div>
+		
+	</section>
+	<div class="scrolling-text">
+		<div style="width: 4.5em;">運行情報</div>
+		<div class="train-info">
+			<div id="train-info">運行情報</div>
+		</div>
+	</div>
+	<div id="credit">クレジット: VOICEVOX:ずんだもん　　あみたろの声素材工房:小春音アミ<br>
+		本アプリケーションが利用する公共交通データは、公共交通オープンデータセンターにおいて提供されるものです。
+		公共交通事業者により提供されたデータを元にしていますが、必ずしも正確・完全なものとは限りません。本アプリケーションの表示内容について、公共交通事業者への直接の問合せは行わないでください。
+		本アプリケーションに関するお問い合わせは、以下のメールアドレスにお願いします。[mailaddress@xxx]
+	</div>
+
+	
+
+	<script src="./config.js"></script>
+	<script src="./JreStationInfoData.js"></script>
+	<script src="./audio.js"></script>
+	<script src="./app.js"></script>
+
+</body>
+</html>
