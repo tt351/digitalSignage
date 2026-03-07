@@ -70,6 +70,27 @@ function dustDay() {
 //デバッグ用Jsonデータ
 var trainInfoData = [
     {
+        "dc:date":"2026-03-07T10:16:50+09:00",
+        "odpt:trainInformationText":{
+            "ja":"東海道線は、人身事故の影響で、上下線の一部列車に遅れがでています。"
+        },
+        "odpt:trainInformationCause":{
+            "ja":"人身事故"
+        },
+        "odpt:trainInformationRange":{
+            "ja":"全線"
+        },
+        "odpt:trainInformationStatus":{
+            "ja":"遅延"
+        }
+    },
+    {
+        "dc:date": "2025-08-31T19:17:01+09:00",
+        "odpt:trainInformationText": {
+            "ja": "平常運転"
+        },
+    },
+    {
         "dc:date": "2025-08-31T19:17:01+09:00",
         "odpt:trainInformationText": {
             "ja": "ここにはtrainInformationTextが入ります。"
@@ -84,12 +105,6 @@ var trainInfoData = [
             "ja": "遅延"
         }
     },
-    {
-        "dc:date": "2025-08-31T19:17:01+09:00",
-        "odpt:trainInformationText": {
-            "ja": "平常運転"
-        },
-    }
 ];
 
 var weatherDataDemo =
@@ -131,6 +146,11 @@ var weatherDataDemo =
                 "T06_12": "0%",
                 "T12_18": "0%",
                 "T18_24": "0%"
+                // "T00_06": "90%",
+                // "T06_12": "100%",
+                // "T12_18": "100%",
+                // "T18_24": "100%"
+
             },
             "image": {
                 "title": "晴れ",

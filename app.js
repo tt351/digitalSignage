@@ -5,33 +5,110 @@
 
 //idで指定したボタンがクリックされたときのイベントリスナーを追加
 const trainInfoElement = document.getElementById("train-info");
-
-  trainInfoElement.addEventListener('click', function() {
+trainInfoElement.addEventListener('click', function() {
     //処理内容
-    if (trainIndex == 0){
-        trainIndex = 1;
-    }
-    else{
+    // if (trainIndex == 0){
+    //     trainIndex = 1;
+    // }
+    // else{
+    //     trainIndex = 0;
+    // }
+    trainIndex++;
+    if (trainIndex >= trainInfoData.length) {
         trainIndex = 0;
     }
     trainInfo();
 });
 
 const dustElement = document.getElementById("dust");
-
-  dustElement.addEventListener('click', function() {
+dustElement.addEventListener('click', function() {
     //処理内容
     debugDustIndex++;
     dustDay();
 });
 
-//クラス名で指定したボタンがクリックされたときのイベントリスナーを追加
-// const button = document.querySelector('.myClass');
+// // idで指定したボタンがクリックされたときのイベントリスナーを追加
+// const readDayElement = document.getElementById("readDay");
+// readDayElement.addEventListener('click', function() {
+//     window.open('','_self').close();
 
+// });
+
+// クラス名で指定したボタンがクリックされたときのイベントリスナーを追加
+const dateAreaElement = document.querySelector('.date-area');
+dateAreaElement.addEventListener('click', function() {
+    window.open('','_self').close();
+});
+
+
+// // クラス名で指定したボタンがクリックされたときのイベントリスナーを追加
+// const button = document.querySelector('.myClass');
 // button.addEventListener('click'() => {
 //     alert('クラス名で指定したボタンがクリックされました！');
 // });
 
+function updateWeather(weatherIndex) {
+    //定数代入
+    if (weatherIndex == 1) {
+        var cityWeatherUrl = CITY_WEATHER_1;
+        var cityName = CITY_NAME_1;
+    }
+    else if (weatherIndex == 2) {
+        var cityWeatherUrl = CITY_WEATHER_2;
+        var cityName = CITY_NAME_2;
+    }
+    if (DEBUG_MODE == false) {
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function () {		  // XMLHttpRequest オブジェクトの状態が変化した際に呼び出されるイベントハンドラ
+            if (req.readyState == 4 && req.status == 200) { // サーバーからのレスポンスが完了し、かつ、通信が正常に終了した場合
+                //alert(req.responseText);		          // 取得した JSON ファイルの中身を表示
+            }
+        };
+        req.open('GET', cityWeatherUrl, false); // 非同期通信で指定した URL のデータを取得する
+        req.send(null);		                          // リクエストを送信
+        console.log("CITY_" + weatherIndex + "!");
+        var data = JSON.parse(req.responseText);      // 取得した JSON ファイルを JavaScript のオブジェクトに変換
+        console.log(data);
+    }
+    else {// デバッグモードの場合は、ローカルの JSON データを使用する
+        var data = weatherDataDemo;
+    }
+
+    var msg = data.description.text;              // オブジェクトの中から、天気予報の説明文を取得
+    var img = data.forecasts[0].image.url;        // オブジェクトの中から、天気予報の画像 URL を取得
+    var temperatureMax = data.forecasts[0].temperature.max.celsius; // 最高気温を取得
+    var chanceOfRain = data.forecasts[0].chanceOfRain; // 降水確率を取得
+
+    document.getElementById(`city-name-${weatherIndex}`).innerHTML = cityName;// 都市名を表示
+    
+    if (DEBUG_MODE == false) {
+        document.getElementsByClassName(`forecast__image__${weatherIndex}`)[0].src = img; // 画像の src 属性を更新
+    }else{
+        document.getElementsByClassName(`forecast__image__${weatherIndex}`)[0].src = "./img/212.svg"; // 画像の src 属性を更新
+    }
+
+    if (temperatureMax !== null) {
+        document.getElementById(`max__${weatherIndex}`).innerHTML = temperatureMax + "℃"; // 最高気温を表示
+    }
+    var chanceOfRainArry = [
+        chanceOfRain.T00_06.slice(0, -1),
+        chanceOfRain.T06_12.slice(0, -1),
+        chanceOfRain.T12_18.slice(0, -1),
+        chanceOfRain.T18_24.slice(0, -1)
+    ];
+    document.getElementById(`chanceOfRain__${weatherIndex}`).innerHTML = "";
+    for (var i = 0; i < chanceOfRainArry.length; i++) {
+        if (i == chanceOfRainArry.length - 1) {
+            document.getElementById(`chanceOfRain__${weatherIndex}`).innerHTML += chanceOfRainArry[i] + "%";
+        }
+        else if (chanceOfRainArry[i].length == 3) {
+            document.getElementById(`chanceOfRain__${weatherIndex}`).innerHTML += chanceOfRainArry[i]+"/";
+        }
+        else{
+            document.getElementById(`chanceOfRain__${weatherIndex}`).innerHTML += chanceOfRainArry[i]+" / ";
+        }
+    }
+}
 function weather() {
 
     if (DEBUG_MODE == false) {
@@ -66,6 +143,7 @@ function weather() {
     var img = data.forecasts[0].image.url;        // オブジェクトの中から、天気予報の画像 URL を取得
     var temperatureMax = data.forecasts[0].temperature.max.celsius; // 最高気温を取得
     var chanceOfRain = data.forecasts[0].chanceOfRain; // 降水確率を取得
+    
 
     document.getElementById("city-name-1").innerHTML = CITY_NAME_1; // 都市名を表示
 
@@ -78,11 +156,40 @@ function weather() {
     if (temperatureMax !== null) {
         document.getElementById("max__1").innerHTML = temperatureMax + "℃"; // 最高気温を表示
     }
-    document.getElementById("chanceOfRain__1").innerHTML
-        = chanceOfRain.T00_06.slice(0, -1) + " / "
-        + chanceOfRain.T06_12.slice(0, -1) + " / "
-        + chanceOfRain.T12_18.slice(0, -1) + " / "
-        + chanceOfRain.T18_24; // 降水確率を表示
+    // document.getElementById("chanceOfRain__1").innerHTML
+    //     = chanceOfRain.T00_06.slice(0, -1) + " / "
+    //     + chanceOfRain.T06_12.slice(0, -1) + " / "
+    //     + chanceOfRain.T12_18.slice(0, -1) + " / "
+    //     + chanceOfRain.T18_24; // 降水確率を表示
+    // var chanceOfRainLength = document.getElementById("chanceOfRain__1").innerHTML.length;
+    // console.log("chanceOfRainLength: ", chanceOfRainLength);
+
+    var chanceOfRainArry = [
+        chanceOfRain.T00_06.slice(0, -1),
+        chanceOfRain.T06_12.slice(0, -1),
+        chanceOfRain.T12_18.slice(0, -1),
+        chanceOfRain.T18_24.slice(0, -1)
+    ];
+    document.getElementById("chanceOfRain__1").innerHTML = "";
+    for (var i = 0; i < chanceOfRainArry.length; i++) {
+        if (i == chanceOfRainArry.length - 1) {
+            document.getElementById("chanceOfRain__1").innerHTML += chanceOfRainArry[i] + "%";
+        }
+        else if (chanceOfRainArry[i].length == 3) {
+            document.getElementById("chanceOfRain__1").innerHTML += chanceOfRainArry[i]+"/";
+        }
+        else{
+            document.getElementById("chanceOfRain__1").innerHTML += chanceOfRainArry[i]+" / ";
+        }
+        // else if (chanceOfRainArry[i].length == 1) {
+        //     document.getElementById("chanceOfRain__1").innerHTML += chanceOfRainArry[i]+" / ";
+        // }
+        // else if (chanceOfRainArry[i].length == 2) {
+        //     document.getElementById("chanceOfRain__1").innerHTML += chanceOfRainArry[i]+" / ";
+        // }
+    }
+
+    // console.log("chanceOfRain: ", chanceOfRain.T00_06.slice(0, -1).length);
     // alert(img);                                  // 取得した天気予報の説明文をアラートで表示
 
 
@@ -103,41 +210,40 @@ function weather() {
     if (temperatureMax !== null) {
         document.getElementById("max__2").innerHTML = temperatureMax + "℃"; // 最高気温を表示
     }
-    document.getElementById("chanceOfRain__2").innerHTML
-        = chanceOfRain.T00_06.slice(0, -1) + " / "
-        + chanceOfRain.T06_12.slice(0, -1) + " / "
-        + chanceOfRain.T12_18.slice(0, -1) + " / "
-        + chanceOfRain.T18_24; // 降水確率を表示
+    // document.getElementById("chanceOfRain__2").innerHTML
+    //     = chanceOfRain.T00_06.slice(0, -1) + " / "
+    //     + chanceOfRain.T06_12.slice(0, -1) + " / "
+    //     + chanceOfRain.T12_18.slice(0, -1) + " / "
+    //     + chanceOfRain.T18_24; // 降水確率を表示
     // alert(img);                                  // 取得した天気予報の説明文をアラートで表示
+    var chanceOfRainArry = [
+        chanceOfRain.T00_06.slice(0, -1),
+        chanceOfRain.T06_12.slice(0, -1),
+        chanceOfRain.T12_18.slice(0, -1),
+        chanceOfRain.T18_24.slice(0, -1)
+    ];
+    document.getElementById("chanceOfRain__2").innerHTML = "";
+    for (var i = 0; i < chanceOfRainArry.length; i++) {
+        if (i == chanceOfRainArry.length - 1) {
+            document.getElementById("chanceOfRain__2").innerHTML += chanceOfRainArry[i] + "%";
+        }
+        else if (chanceOfRainArry[i].length == 3) {
+            document.getElementById("chanceOfRain__2").innerHTML += chanceOfRainArry[i]+"/";
+        }
+        else{
+            document.getElementById("chanceOfRain__2").innerHTML += chanceOfRainArry[i]+" / ";
+        }
+        // else if (chanceOfRainArry[i].length == 1) {
+        //     document.getElementById("chanceOfRain__2").innerHTML += chanceOfRainArry[i]+" / ";
+        // }
+        // else if (chanceOfRainArry[i].length == 2) {
+        //     document.getElementById("chanceOfRain__2").innerHTML += chanceOfRainArry[i]+" / ";
+        // }
+    }
 
 }
-function trainInfoStatusDisplay(status, cause, space) {
-    var p = document.getElementById("train-info-status");
-    // var status_cause=status+"　"+cause;
-    var status_cause = status + "　" + cause;
-    if (status_cause.length > 10) {
-        p.style.animationDuration = (status_cause.length * 0.2) + "s";
-        // p.style.animationName = "SlideSample";
-        // p.style.animationPlayState = "running";
-        // p.style.animationIterationCount = "infinite";
-        p.classList.add("scrollEnable");
 
-        document.getElementsByClassName("train-status")[0].textContent = status;
-
-
-        
-
-        document.getElementById("train-info-status").innerHTML = cause + space + cause + space;
-    }
-    else {
-        p.style.animation = "none";
-        document.getElementsByClassName("train-status")[0].textContent = status;
-        document.getElementById("train-info-status").innerHTML = cause;
-        // document.getElementById("train-info").innerHTML = info;
-    }
-}
 function trainInfoSuccess(data) {
-
     //更新時刻の取得※取得した時間ではなく、取得したデータにある更新時刻を読み込み
     var date = data["dc:date"].substr(11, 5);
 
@@ -145,26 +251,41 @@ function trainInfoSuccess(data) {
     var info = data["odpt:trainInformationText"].ja; // オブジェクトの中から、運行情報のテキストを取得
     const space = "　　　　";
 
+    //////////////////////////////////////////////////////////
     //天気の右側の情報の表示
+    var p = document.getElementById("train-info-status");
     if (info != "平常運転") {
         var range = data["odpt:trainInformationRange"].ja; // 運行情報の範囲を取得
         var status = data["odpt:trainInformationStatus"].ja; // 運行情報のステータスを取得
         var cause = data["odpt:trainInformationCause"].ja; // 運行情報の原因を取得
+
         document.getElementById("train-info-range").innerHTML = range;
-        trainInfoStatusDisplay(status, cause, space);
-    } else {
+        document.getElementsByClassName("train-status")[0].textContent = status;
+        
+        if (cause.length > 10) {
+            p.style.animationDuration = (cause.length * 0.2) + "s";
+        p.style.animationName = "SlideSample";
+        p.style.animationPlayState = "running";
+        p.style.animationIterationCount = "infinite";
+        p.style.animationTimingFunction = "linear";
+            document.getElementById("train-info-status").innerHTML = cause + space + cause + space;
+        }
+        else {
+            p.style.animation = "none";
+            document.getElementById("train-info-status").innerHTML = cause;
+        }
+    } else {//(info == "平常運転")
         document.getElementsByClassName("train-status")[0].textContent = "";
         document.getElementById("train-info-range").innerHTML = "";
         document.getElementById("train-info-status").innerHTML = "";
+        p.style.animation = "none";
     }
-
     //////////////////////////////////////////////////
-    //運行情報
+    //運行情報ここから
     console.log("train-info length:", info.length);
     var p = document.getElementById("train-info");
     if (info.length > 10) {
         p.style.animationDuration = (info.length * 0.2) + "s";
-        // p.style.animationDuration ="10s";
         p.style.animationName = "SlideSample";
         p.style.animationPlayState = "running";
         p.style.animationIterationCount = "infinite";
@@ -177,10 +298,8 @@ function trainInfoSuccess(data) {
         document.getElementById("train-info").innerHTML = info;
     }
     //////////////////////////////////////////////////
-
+    //常時表示
     document.getElementById("train-info-updatetime").innerHTML = "更新時刻 " + date;
-
-
 }
 
 function trainInfo() {
@@ -281,5 +400,7 @@ setInterval('trainInfo()', 600000);// 10分ごとに更新
 dustDay();// ゴミの日を表示。定義はconfig.jsに記載
 setInterval('dustDay()', 600000);// 10分ごとに更新
 
-weather();// 天気予報を取得。
+// weather();// 天気予報を取得。
+updateWeather(1);// 天気予報を取得。複数の都市に対応させるため、関数名を変更
+updateWeather(2);// 天気予報を取得。複数の都市に対応させるため、関数名を変更
 
