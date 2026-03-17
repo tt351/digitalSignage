@@ -9,6 +9,7 @@ const YOUR_ACCESS_TOKEN = 'KEY';
 const API_URL = 'https://api-challenge.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:jre-is' + API_FILTER.join('&') + 'acl:consumerKey=' + YOUR_ACCESS_TOKEN;
 
 const DEBUG_MODE = true; // デバッグモードを有効にするかどうかのフラグ
+var IS_WEATHER_INFO_DISP = true; // 天気情報を表示するかどうかのフラグ
 var trainIndex = 0; // 表示する運行情報のインデックス
 
 var debugDustIndex = 0; // デバッグモードで表示するゴミの日のインデックス

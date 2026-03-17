@@ -2,7 +2,7 @@
 // document.body.onclick = function () {
 //     // window.open('','_self').close();
 // }
-
+var msg;
 //idで指定したボタンがクリックされたときのイベントリスナーを追加
 const trainInfoElement = document.getElementById("train-info");
 trainInfoElement.addEventListener('click', function() {
@@ -13,10 +13,21 @@ trainInfoElement.addEventListener('click', function() {
     // else{
     //     trainIndex = 0;
     // }
+    if(IS_WEATHER_INFO_DISP){
+        IS_WEATHER_INFO_DISP = false;
+        document.getElementsByClassName(`card-train`)[0].style.visibility = "";
+
+        trainInfo();
+        return;
+    }
     trainIndex++;
     if (trainIndex >= trainInfoData.length) {
         trainIndex = 0;
+        IS_WEATHER_INFO_DISP = true;
+        weatherInfoDispray(msg);
+        return;
     }
+    // IS_WEATHER_INFO_DISP
     trainInfo();
 });
 
@@ -74,7 +85,7 @@ function updateWeather(weatherIndex) {
         var data = weatherDataDemo;
     }
 
-    var msg = data.description.text;              // オブジェクトの中から、天気予報の説明文を取得
+    msg = data.description.headlineText;// オブジェクトの中から、天気予報の説明文を取得 グローバル変数
     var img = data.forecasts[0].image.url;        // オブジェクトの中から、天気予報の画像 URL を取得
     var temperatureMax = data.forecasts[0].temperature.max.celsius; // 最高気温を取得
     var chanceOfRain = data.forecasts[0].chanceOfRain; // 降水確率を取得
@@ -107,6 +118,34 @@ function updateWeather(weatherIndex) {
         else{
             document.getElementById(`chanceOfRain__${weatherIndex}`).innerHTML += chanceOfRainArry[i]+" / ";
         }
+    }
+    if(IS_WEATHER_INFO_DISP){
+        weatherInfoDispray(msg);
+    }
+}
+function weatherInfoDispray(msg){
+    // var q = document.getElementsByClassName(`card-train`)[0];
+    // q.style.visibility = "hidden";
+    
+    document.getElementsByClassName(`card-train`)[0].style.visibility = "hidden";
+
+    document.getElementById("train-info-title").innerHTML = "天気情報"
+
+    var p = document.getElementById("train-info");
+    const space = "　　　　";
+    var info = msg;
+    if (info.length > 10) {
+        p.style.animationDuration = (info.length * 0.2) + "s";
+        p.style.animationName = "SlideSample";
+        p.style.animationPlayState = "running";
+        p.style.animationIterationCount = "infinite";
+        p.style.animationTimingFunction = "linear";
+
+        document.getElementById("train-info").innerHTML = info + space + info + space;
+    }
+    else {
+        p.style.animation = "none";
+        document.getElementById("train-info").innerHTML = info;
     }
 }
 function weather() {
@@ -303,7 +342,8 @@ function trainInfoSuccess(data) {
 }
 
 function trainInfo() {
-    if (DEBUG_MODE == false) {
+    if(IS_WEATHER_INFO_DISP)return;
+    if ( DEBUG_MODE == false ) {
         var req = new XMLHttpRequest(); // XMLHttpRequest オブジェクトを生成
         req.open('GET', API_URL);       // URL のデータを取得する
         req.send(null);                 // リクエストを送信
@@ -396,6 +436,7 @@ setInterval('showClock()', 1000);// 現在時刻。1秒ごとに更新
 
 trainInfo();// 運行情報を取得
 setInterval('trainInfo()', 600000);// 10分ごとに更新
+
 
 dustDay();// ゴミの日を表示。定義はconfig.jsに記載
 setInterval('dustDay()', 600000);// 10分ごとに更新
