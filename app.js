@@ -91,12 +91,8 @@ function updateWeather(weatherIndex) {
     var chanceOfRain = data.forecasts[0].chanceOfRain; // 降水確率を取得
 
     document.getElementById(`city-name-${weatherIndex}`).innerHTML = cityName;// 都市名を表示
-    
-    if (DEBUG_MODE == false) {
-        document.getElementsByClassName(`forecast__image__${weatherIndex}`)[0].src = img; // 画像の src 属性を更新
-    }else{
-        document.getElementsByClassName(`forecast__image__${weatherIndex}`)[0].src = "./img/212.svg"; // 画像の src 属性を更新
-    }
+        
+    document.getElementsByClassName(`forecast__image__${weatherIndex}`)[0].src = img; // 画像の src 属性を更新
 
     if (temperatureMax !== null) {
         document.getElementById(`max__${weatherIndex}`).innerHTML = temperatureMax + "℃"; // 最高気温を表示
