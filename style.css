@@ -68,17 +68,28 @@ body {
     display: flex;
     padding: 0 1.2rem;
 }
-
+.weather{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    background-color: white;
+    padding: 0rem 0.5rem 1rem;
+    align-items: center;
+}
+.weather-name{
+    font-size: 3vw;
+}
+.weather-content{
+    display: flex;
+}
 /* カード要素 .card1～3 */
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid gray;
-    background-color: white;
-    padding: 0.5rem 1.5rem 1rem;
-    /* box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.2); */
-    /* font-size: 100px; */
+    /* border: 1px solid gray; */
+    /* background-color: white; */
+    padding: 0rem 2.5rem 0rem;
     font-size: 3vw;
     margin: 0px;
     line-height: 1.2;
@@ -89,7 +100,7 @@ body {
     img {
 
         width: 320px;
-        height: 240px;
+        height: 160px;
         /* width: 160px;
         height: 120px; */
 
@@ -99,6 +110,10 @@ body {
         height: calc(1em * 1.2);
     }
 }
+.vertical-line {
+    border-left: 2px solid #33333349; /* 線の太さ 線の種類 色 */
+    padding-left: 10px;        /* 文字と線の間隔 */
+}
 
 .city-temp {
     display: flex;
@@ -106,14 +121,16 @@ body {
     width: 100%;
 }
 
-#max__1, #max__2 {
+#max__0, #max__1 {
     color: red;
 }
+    
+#min__0, #min__1 {
+    color: blue;
+}
 
-#city-name-1, #city-name-2 {
-    /* font-size: 80px; */
+#date__0, #date__1 {
     font-size: 3vw;
-    font-weight: bold;
 }
 .card-train {
     display: flex;
@@ -218,7 +235,7 @@ body {
     font-size: 10px;
     text-align: right;
 }
-#chanceOfRain__1, #chanceOfRain__2 {
+#chanceOfRain__0, #chanceOfRain__1 {
     white-space: nowrap;
 
 }

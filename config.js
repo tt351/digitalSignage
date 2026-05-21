@@ -110,6 +110,8 @@ var trainInfoData = [
 
 var weatherDataDemo =
 {
+    "title": "福岡県 久留米 の天気",
+   
     "description": {
         "headlineText": "福岡、北九州地方では、３日夕方まで高波に注意してください。福岡県では、４日まで空気の乾燥した状態が続くため、火の取り扱いに注意してください。",
         "bodyText": "　福岡県は、寒気の影響により曇りとなっている所がありますが、高気圧に覆われて概ね晴れています。\n\n　３日は、寒気の影響によりはじめ曇りとなる所がありますが、高気圧に覆われて概ね晴れとなるでしょう。\n\n　４日は、高気圧に覆われて晴れとなる所もありますが、気圧の谷や湿った空気の影響により概ね曇りで、夜遅くは雨となるでしょう。",
@@ -117,7 +119,11 @@ var weatherDataDemo =
     },
     "forecasts": [
         {
+            "dateLabel": "今日",
             "temperature": {
+                 "min": {
+                    "celsius": null,
+                },
                 "max": {
                     "celsius": "14",
                 }
@@ -136,5 +142,26 @@ var weatherDataDemo =
                 "url": "./img/100.svg"
             }
         },
-    ],
+
+        {
+            "dateLabel": "明日",
+            "temperature": {
+                "min": {
+                    "celsius": "4",
+                },
+                "max": {
+                    "celsius": "18",
+                }
+            },
+            "chanceOfRain": {
+                "T00_06": "10%",
+                "T06_12": "10%",
+                "T12_18": "20%",
+                "T18_24": "60%"
+            },
+            "image": {
+                "url": "./img/212.svg",
+            }
+        }
+    ]
 };
